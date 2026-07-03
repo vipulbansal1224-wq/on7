@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Filter, ShoppingBag, Eye, SlidersHorizontal, Check } from 'lucide-react';
+import { Filter, ShoppingBag, Eye, SlidersHorizontal, Check, X, Facebook, Instagram, Twitter } from 'lucide-react';
 
 interface Product {
   id: number;
@@ -18,6 +18,7 @@ export default function Collection() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [cartFeedback, setCartFeedback] = useState<number | null>(null);
   const [productsList, setProductsList] = useState<Product[]>([]);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem('on7_products');
@@ -125,7 +126,7 @@ export default function Collection() {
         {/* Catalog layout */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
           
-          {/* LEFT: Filters Panel (Desktop) */}
+          {/* LEFT: Filters Panel */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-6">
               <h3 className="text-xs uppercase font-bold text-brand-dark tracking-widest flex items-center gap-2">
@@ -153,14 +154,14 @@ export default function Collection() {
 
           {/* RIGHT: Grid List */}
           <div className="lg:col-span-3">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
               {filteredProducts.map(product => (
                 <div 
                   key={product.id} 
                   className="group bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm transition-custom hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between"
                 >
                   {/* Card Image */}
-                  <div className="relative h-80 overflow-hidden bg-gray-100 flex items-center justify-center">
+                  <div className="relative h-64 sm:h-72 md:h-80 overflow-hidden bg-gray-100 flex items-center justify-center">
                     <img 
                       src={product.image} 
                       alt={product.name}
@@ -176,17 +177,21 @@ export default function Collection() {
 
                     {/* Actions Overlay */}
                     <div className="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-                      <button className="bg-white hover:bg-brand-coral text-brand-dark hover:text-white p-3 rounded-full transition-colors shadow-md">
-                        <Eye className="w-4 h-4" />
+                      <button 
+                        onClick={() => setQuickViewProduct(product)}
+                        className="bg-white hover:bg-brand-coral text-brand-dark hover:text-white p-3 rounded-full transition-colors shadow-md"
+                        title="Quick View"
+                      >
+                        <Eye className="w-5 h-5" />
                       </button>
                     </div>
                   </div>
 
                   {/* Card Info */}
-                  <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
+                  <div className="p-4 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
                     <div className="space-y-2">
                       <div className="flex justify-between items-start gap-2">
-                        <h4 className="font-bold text-brand-dark text-md uppercase leading-tight group-hover:text-brand-coral transition-colors line-clamp-2">
+                        <h4 className="font-bold text-brand-dark text-sm sm:text-md uppercase leading-tight group-hover:text-brand-coral transition-colors line-clamp-2">
                           {product.name}
                         </h4>
                       </div>
@@ -195,7 +200,7 @@ export default function Collection() {
                       </p>
                       
                       {/* Sizes Showcase */}
-                      <div className="flex gap-1.5 pt-2">
+                      <div className="flex flex-wrap gap-1.5 pt-2">
                         {product.sizes.map(size => (
                           <span key={size} className="text-xxs font-bold text-brand-grey bg-brand-light px-2 py-0.5 border border-gray-200 rounded">
                             {size}
@@ -205,10 +210,10 @@ export default function Collection() {
                     </div>
 
                     <div className="flex items-center justify-between border-t border-gray-100 pt-4 mt-auto">
-                      <span className="font-display font-black text-xl text-brand-dark">{product.price}</span>
+                      <span className="font-display font-black text-lg sm:text-xl text-brand-dark">{product.price}</span>
                       <button 
                         onClick={() => handleAddToCart(product.id)}
-                        className={`font-semibold text-xs uppercase px-4 py-2.5 rounded-full tracking-wide transition-custom flex items-center gap-1.5 shadow ${
+                        className={`font-semibold text-xs uppercase px-3 py-2 sm:px-4 sm:py-2.5 rounded-full tracking-wide transition-custom flex items-center gap-1.5 shadow ${
                           cartFeedback === product.id
                             ? 'bg-brand-coral text-white'
                             : 'bg-brand-dark hover:bg-brand-coral text-white hover:text-white'
@@ -220,7 +225,7 @@ export default function Collection() {
                           </>
                         ) : (
                           <>
-                            <ShoppingBag className="w-3.5 h-3.5" /> Add To Bag
+                            <ShoppingBag className="w-3.5 h-3.5" /> Add
                           </>
                         )}
                       </button>
@@ -232,6 +237,113 @@ export default function Collection() {
           </div>
         </div>
       </div>
+
+      {/* QUICK VIEW MODAL */}
+      {quickViewProduct && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-brand-dark/80 backdrop-blur-sm transition-opacity" 
+            onClick={() => setQuickViewProduct(null)} 
+          />
+          
+          {/* Modal Content */}
+          <div className="relative bg-white rounded-3xl overflow-hidden shadow-2xl max-w-4xl w-full flex flex-col md:flex-row animate-in fade-in zoom-in duration-300">
+            
+            {/* Close Button */}
+            <button 
+              onClick={() => setQuickViewProduct(null)}
+              className="absolute top-4 right-4 z-10 bg-white/50 hover:bg-white text-brand-dark p-2 rounded-full shadow-sm backdrop-blur transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Product Image */}
+            <div className="w-full md:w-1/2 h-64 md:h-auto bg-gray-100 relative">
+              <img 
+                src={quickViewProduct.image} 
+                alt={quickViewProduct.name} 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              {quickViewProduct.tag && (
+                <span className="absolute top-6 left-6 bg-brand-coral text-white text-xs font-black uppercase px-4 py-1.5 rounded-full tracking-wider shadow-md">
+                  {quickViewProduct.tag}
+                </span>
+              )}
+            </div>
+
+            {/* Product Details */}
+            <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-between">
+              <div className="space-y-6">
+                <div>
+                  <span className="text-brand-coral font-bold text-xs uppercase tracking-widest block mb-2">{quickViewProduct.category} Collection</span>
+                  <h2 className="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight leading-tight">
+                    {quickViewProduct.name}
+                  </h2>
+                </div>
+                
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  {quickViewProduct.desc} Featuring premium Dry-Fit technology, flatlock stitching, and extreme mobility.
+                </p>
+
+                {/* Available Sizes */}
+                <div className="space-y-3">
+                  <h4 className="font-bold text-xs uppercase tracking-widest text-brand-dark">Available Sizes</h4>
+                  <div className="flex flex-wrap gap-3">
+                    {['S', 'M', 'L', 'XL', 'XXL'].map(size => {
+                      const isAvailable = quickViewProduct.sizes.includes(size);
+                      return (
+                        <div 
+                          key={size}
+                          className={`w-12 h-12 flex items-center justify-center font-bold text-sm border-2 rounded-xl transition-all ${
+                            isAvailable 
+                              ? 'border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white cursor-pointer' 
+                              : 'border-gray-200 text-gray-300 cursor-not-allowed bg-gray-50'
+                          }`}
+                        >
+                          {size}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Dummy Social Links */}
+                <div className="pt-4 border-t border-gray-100 flex items-center gap-4">
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Share</span>
+                  <button className="text-gray-400 hover:text-[#1877F2] transition-colors"><Facebook className="w-5 h-5" /></button>
+                  <button className="text-gray-400 hover:text-[#E4405F] transition-colors"><Instagram className="w-5 h-5" /></button>
+                  <button className="text-gray-400 hover:text-[#1DA1F2] transition-colors"><Twitter className="w-5 h-5" /></button>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span className="text-3xl font-black text-brand-dark w-full sm:w-auto text-left">
+                  {quickViewProduct.price}
+                </span>
+                <button 
+                  onClick={() => handleAddToCart(quickViewProduct.id)}
+                  className={`w-full sm:w-auto font-bold text-sm uppercase px-8 py-4 rounded-full tracking-wider transition-custom flex items-center justify-center gap-2 shadow-lg ${
+                    cartFeedback === quickViewProduct.id
+                      ? 'bg-brand-coral text-white scale-95'
+                      : 'bg-brand-dark hover:bg-brand-coral text-white'
+                  }`}
+                >
+                  {cartFeedback === quickViewProduct.id ? (
+                    <>
+                      <Check className="w-5 h-5" /> Added to Bag
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag className="w-5 h-5" /> Add to Cart
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
