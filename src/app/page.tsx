@@ -1,29 +1,76 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, Zap, HeartHandshake, Compass } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Zap, HeartHandshake, Star, Flame, Trophy, Instagram, Facebook } from 'lucide-react';
 
 export default function Home() {
+  // Size Finder State
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+  const [recommendedSize, setRecommendedSize] = useState<string | null>(null);
+
+  const calculateSize = (e: React.FormEvent) => {
+    e.preventDefault();
+    const h = parseFloat(height);
+    const w = parseFloat(weight);
+    
+    if (h && w) {
+      // Basic sizing logic for activewear
+      if (w < 60) setRecommendedSize('S');
+      else if (w < 72) setRecommendedSize('M');
+      else if (w < 84) setRecommendedSize('L');
+      else if (w < 95) setRecommendedSize('XL');
+      else setRecommendedSize('XXL');
+    }
+  };
+
+  const testimonials = [
+    {
+      name: "Sandeep Kumar",
+      role: "State Level Athlete",
+      rating: 5,
+      comment: "ON7 tracksuits are incredibly flexible. The 4-way stretch is perfect for track sprints and gym workouts. The Jalandhar store guided me to the exact size."
+    },
+    {
+      name: "Vikas Sharma",
+      role: "Gym Owner & Coach",
+      rating: 5,
+      comment: "The Dry-Fit technology actually works. Unlike other local brands, the colors of these tracksuits don't fade after machine washes. Highly recommended for daily training."
+    },
+    {
+      name: "Gagan Preet",
+      role: "Fitness Influencer",
+      rating: 5,
+      comment: "Super premium fit! The black-blue track pants look very stylish. The fabrics are very lightweight and moisture-wicking during cardio sessions."
+    }
+  ];
+
+  const socialFeed = [
+    { id: 1, type: 'instagram', image: '/images/model-tracksuit.jpg', likes: '1.2k', link: 'https://instagram.com' },
+    { id: 2, type: 'facebook', image: '/images/red-shorts.jpg', likes: '840', link: 'https://facebook.com' },
+    { id: 3, type: 'instagram', image: '/images/tracksuit-flat.jpg', likes: '1.5k', link: 'https://instagram.com' },
+    { id: 4, type: 'facebook', image: '/images/grey-pants.jpg', likes: '920', link: 'https://facebook.com' }
+  ];
+
   return (
     <div className="relative">
+      
       {/* ── HERO BANNER SECTION ── */}
       <section className="relative h-screen bg-brand-dark flex items-center justify-center overflow-hidden">
-        {/* Immersive background image overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000 scale-105"
           style={{ backgroundImage: `url('/images/model-tracksuit.jpg')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/50 to-transparent" />
 
-        {/* Hero Text Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white space-y-8 z-10 pt-16">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs font-semibold uppercase tracking-widest text-brand-coral animate-pulse">
             <Zap className="w-3.5 h-3.5" /> High-Agility Performance Wear
           </div>
           <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
             ENGINEERED TO <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-coral via-[#ff7c62] to-[#ffb8a8]">CONQUER</span>
+            <span className="text-gradient-coral">CONQUER</span>
           </h1>
           <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-300 font-medium leading-relaxed">
             Introducing ON7® Sportswear. Lightweight, moisture-wicking dry-fit gear constructed to withstand your most intense athletic training sessions.
@@ -45,7 +92,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Bottom Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 opacity-70 z-10">
           <span className="text-xxs uppercase tracking-widest text-gray-400 font-bold">Scroll Down</span>
           <div className="w-1 h-6 bg-white/20 rounded-full overflow-hidden">
@@ -54,7 +100,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CORE TECH SPECS (Grid) ── */}
+      {/* ── CORE TECH SPECS ── */}
       <section className="py-24 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -62,12 +108,11 @@ export default function Home() {
               ON7 Engineered Advantage
             </h2>
             <p className="text-brand-grey text-md font-medium mt-4">
-              Designed in Ludhiana, engineered for performance. We select premium fibers that support natural body cooling and fluid flexibility.
+              Designed in Punjab, engineered for performance. We select premium fibers that support natural body cooling and fluid flexibility.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
             <div className="bg-brand-light p-8 rounded-2xl border border-gray-200/60 transition-custom scale-hover">
               <div className="w-12 h-12 rounded-xl bg-brand-coral/10 text-brand-coral flex items-center justify-center mb-6">
                 <Zap className="w-6 h-6" />
@@ -78,7 +123,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Feature 2 */}
             <div className="bg-brand-light p-8 rounded-2xl border border-gray-200/60 transition-custom scale-hover">
               <div className="w-12 h-12 rounded-xl bg-brand-coral/10 text-brand-coral flex items-center justify-center mb-6">
                 <ShieldCheck className="w-6 h-6" />
@@ -89,7 +133,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Feature 3 */}
             <div className="bg-brand-light p-8 rounded-2xl border border-gray-200/60 transition-custom scale-hover">
               <div className="w-12 h-12 rounded-xl bg-brand-coral/10 text-brand-coral flex items-center justify-center mb-6">
                 <HeartHandshake className="w-6 h-6" />
@@ -103,8 +146,75 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── INTERACTIVE SIZE FINDER SECTION ── */}
+      <section className="py-24 bg-brand-light border-b border-gray-200/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white p-8 md:p-12 rounded-3xl border border-gray-200 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            
+            {/* Title block */}
+            <div className="space-y-4">
+              <span className="text-brand-coral font-bold text-xs uppercase tracking-widest block">Fit Guide</span>
+              <h2 className="text-3xl md:text-4xl font-black text-brand-dark uppercase tracking-tight">Find Your Perfect ON7 Fit</h2>
+              <p className="text-brand-grey text-sm leading-relaxed">
+                Since high-performance sportswear needs to sit perfectly, enter your height and weight details to check our recommended size catalog (S, M, L, XL, XXL).
+              </p>
+            </div>
+
+            {/* Form & Result */}
+            <div className="bg-brand-light p-6 rounded-2xl border border-gray-200">
+              {recommendedSize ? (
+                <div className="text-center space-y-4 animate-fade-in">
+                  <span className="text-brand-grey text-xs uppercase font-bold tracking-wider">Your Recommended Size is</span>
+                  <div className="text-6xl font-black text-brand-coral font-display">{recommendedSize}</div>
+                  <button 
+                    onClick={() => setRecommendedSize(null)}
+                    className="text-xs text-brand-dark underline font-bold uppercase tracking-wider hover:text-brand-coral transition-colors"
+                  >
+                    Reset Sizer
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={calculateSize} className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xxs font-bold text-brand-grey uppercase tracking-wider block mb-1">Height (cm)</label>
+                      <input 
+                        type="number" 
+                        required 
+                        placeholder="e.g. 175"
+                        value={height}
+                        onChange={(e) => setHeight(e.target.value)}
+                        className="w-full px-3 py-2 bg-white rounded-lg border border-gray-200 outline-none text-sm focus:border-brand-coral"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xxs font-bold text-brand-grey uppercase tracking-wider block mb-1">Weight (kg)</label>
+                      <input 
+                        type="number" 
+                        required 
+                        placeholder="e.g. 70"
+                        value={weight}
+                        onChange={(e) => setWeight(e.target.value)}
+                        className="w-full px-3 py-2 bg-white rounded-lg border border-gray-200 outline-none text-sm focus:border-brand-coral"
+                      />
+                    </div>
+                  </div>
+                  <button 
+                    type="submit"
+                    className="w-full bg-brand-dark hover:bg-brand-coral text-white py-3 rounded-xl font-bold uppercase text-xs tracking-wider transition-colors shadow"
+                  >
+                    Calculate Size
+                  </button>
+                </form>
+              )}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ── CATEGORY GRID WITH DYNAMIC BANNERS ── */}
-      <section className="py-24 bg-brand-light">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
             <div>
@@ -120,7 +230,6 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Category 1: Tracksuits */}
             <div className="group relative h-[500px] rounded-3xl overflow-hidden shadow-md transition-custom hover:shadow-xl">
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
@@ -139,7 +248,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Category 2: Sports Shorts */}
             <div className="group relative h-[500px] rounded-3xl overflow-hidden shadow-md transition-custom hover:shadow-xl">
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
@@ -158,7 +266,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Category 3: Track Pants */}
             <div className="group relative h-[500px] rounded-3xl overflow-hidden shadow-md transition-custom hover:shadow-xl">
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
@@ -180,6 +287,76 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── CUSTOMER TESTIMONIALS SECTION ── */}
+      <section className="py-24 bg-brand-light border-t border-b border-gray-200/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-brand-coral font-bold text-xs uppercase tracking-widest block mb-2">Testimonials</span>
+            <h2 className="text-3xl md:text-5xl font-black text-brand-dark uppercase tracking-tight">Trusted by Athletes</h2>
+            <p className="text-brand-grey text-sm mt-3">Read how gym owners, trainers, and athletes review ON7 activewear.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((t, idx) => (
+              <div key={idx} className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between space-y-6">
+                <div className="space-y-4">
+                  <div className="flex text-amber-400">
+                    {Array.from({ length: t.rating }).map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-brand-dark/90 text-sm italic leading-relaxed">
+                    "{t.comment}"
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 border-t border-gray-100 pt-4">
+                  <div className="w-10 h-10 rounded-full bg-brand-coral/10 text-brand-coral flex items-center justify-center font-bold">
+                    {t.name[0]}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm text-brand-dark uppercase">{t.name}</h4>
+                    <span className="text-xxs text-brand-grey font-semibold block">{t.role}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SOCIAL WALL SECTION (Instagram & Facebook Mock Grid) ── */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-brand-coral font-bold text-xs uppercase tracking-widest block mb-2">Social Feed</span>
+            <h2 className="text-3xl md:text-5xl font-black text-brand-dark uppercase tracking-tight">ON7 Social Wall</h2>
+            <p className="text-brand-grey text-sm mt-3">Tag us at **@ON7Active** on Instagram & Facebook to get featured.</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {socialFeed.map(post => (
+              <a 
+                key={post.id}
+                href={post.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative h-72 rounded-2xl overflow-hidden shadow border border-gray-200 block"
+              >
+                <img 
+                  src={post.image} 
+                  alt="Social post" 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-brand-dark/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-white gap-2">
+                  {post.type === 'instagram' ? <Instagram className="w-8 h-8" /> : <Facebook className="w-8 h-8" />}
+                  <span className="text-xs font-bold uppercase tracking-wider">{post.likes} Likes</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── FULL WIDTH MARKETING HERO BANNER ── */}
       <section className="relative py-32 bg-brand-dark text-white overflow-hidden">
         <div 
@@ -190,24 +367,25 @@ export default function Home() {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <div className="max-w-2xl space-y-6">
-            <span className="text-brand-coral font-bold text-xs uppercase tracking-widest block">Ludhiana Premium Design</span>
+            <span className="text-brand-coral font-bold text-xs uppercase tracking-widest block">Punjab Experience Store</span>
             <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
-              ENGINEERED FOR THE UNSTOPPABLE
+              VISIT OUR FLAGSHIP STORE IN JALANDHAR
             </h2>
             <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-              Every detail in ON7 gear is scrutinized—from the flatlock stitch seams that avoid chafing, to the micro-grid mesh zones built for heat dissipation. Step up your wardrobe.
+              Every detail in ON7 gear is scrutinized—from the flatlock stitch seams that avoid chafing, to the micro-grid mesh zones built for heat dissipation. Drop by our Jalandhar complex (above Punjab & Sind Bank) to experience the fabric line.
             </p>
             <div className="pt-4">
               <Link
-                href="/about"
+                href="/contact"
                 className="bg-white text-brand-dark hover:bg-brand-coral hover:text-white font-bold px-8 py-4 rounded-full transition-custom inline-flex items-center gap-2 text-sm uppercase tracking-wider"
               >
-                Learn Our Process
+                Find Us on Map
               </Link>
             </div>
           </div>
         </div>
       </section>
+
     </div>
   );
 }

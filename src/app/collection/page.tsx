@@ -18,65 +18,65 @@ export default function Collection() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [cartFeedback, setCartFeedback] = useState<number | null>(null);
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: "ON7® Engineered Performance Tracksuit",
-      category: "tracksuits",
-      price: "₹2,499",
-      image: "/images/model-tracksuit.jpg",
-      tag: "Best Seller",
-      sizes: ["S", "M", "L", "XL", "XXL"],
-      desc: "Dry-fit performance tracksuit featuring a high-stretch mock neck jacket and tapered athletic joggers."
-    },
-    {
-      id: 2,
-      name: "ON7® Branded Gym Training Shorts",
-      category: "shorts",
-      price: "₹899",
-      image: "/images/red-shorts.jpg",
-      tag: "Hot Release",
-      sizes: ["M", "L", "XL", "XXL"],
-      desc: "Lightweight workout shorts carrying our iconic circular logo prints with multi-panel athletic stripes."
-    },
-    {
-      id: 3,
-      name: "ON7® Micro-Panel Casual Tracksuit",
-      category: "tracksuits",
-      price: "₹2,299",
-      image: "/images/tracksuit-flat.jpg",
-      sizes: ["S", "M", "L", "XL"],
-      desc: "Designed for everyday recovery workouts. Features black polyester layout with blue panel detailing."
-    },
-    {
-      id: 4,
-      name: "ON7® Agility Fit Joggers",
-      category: "pants",
-      price: "₹1,499",
-      image: "/images/grey-pants.jpg",
-      tag: "New Color",
-      sizes: ["S", "M", "L", "XL", "XXL"],
-      desc: "High-mobility steel grey sweatpants with zippered hip pockets and custom ankle-rib elastic cuffs."
-    },
-    {
-      id: 5,
-      name: "ON7® Elite Tracksuit (Slate Navy)",
-      category: "tracksuits",
-      price: "₹2,599",
-      image: "/images/tracksuit-flat.jpg",
-      sizes: ["M", "L", "XL"],
-      desc: "Premium track jacket and track pants combo with dynamic ventilation mesh inserts."
-    },
-    {
-      id: 6,
-      name: "ON7® Training Shorts (Carbon Black)",
-      category: "shorts",
-      price: "₹949",
-      image: "/images/red-shorts.jpg",
-      sizes: ["S", "M", "L", "XL"],
-      desc: "Ultra-breathable micro-mesh training shorts. Engineered to withstand intense high-interval running."
+  const products: Product[] = Array.from({ length: 61 }, (_, idx) => {
+    const id = idx + 1;
+    const categories: ('tracksuits' | 'shorts' | 'pants')[] = ['tracksuits', 'shorts', 'pants'];
+    const category = categories[idx % 3];
+    
+    const tracksuitNames = [
+      "ON7® Pro-Agility Active Tracksuit",
+      "ON7® Dry-Fit Elite Gym Tracksuit",
+      "ON7® Thermal Fleece Comfort Tracksuit",
+      "ON7® Engineered Side-Stripe Tracksuit",
+      "ON7® Vector Graphic Mockneck Tracksuit"
+    ];
+    
+    const shortsNames = [
+      "ON7® High-Performance Training Shorts",
+      "ON7® Signature Circular Logo Gym Shorts",
+      "ON7® Moisture-Control Running Shorts",
+      "ON7® Flex-Comfort Agility Shorts",
+      "ON7® Dual-Panel Athletic Mesh Shorts"
+    ];
+    
+    const joggerNames = [
+      "ON7® Tapered Fit Gym Jogger Pants",
+      "ON7® 4-Way Stretch Athletic Sweatpants",
+      "ON7® Agility Zippered Pocket Joggers",
+      "ON7® Dynamic Panel Warm-up Joggers",
+      "ON7® Ultra-Lightweight Track Joggers"
+    ];
+    
+    let name = "";
+    if (category === 'tracksuits') {
+      name = tracksuitNames[idx % tracksuitNames.length];
+    } else if (category === 'shorts') {
+      name = shortsNames[idx % shortsNames.length];
+    } else {
+      name = joggerNames[idx % joggerNames.length];
     }
-  ];
+
+    const prices = ["₹2,499", "₹899", "₹1,499", "₹2,299", "₹949", "₹1,299"];
+    const price = prices[idx % prices.length];
+    
+    const sizes = id % 2 === 0 ? ["S", "M", "L", "XL", "XXL"] : ["M", "L", "XL"];
+    
+    let tag = undefined;
+    if (id % 5 === 0) tag = "Best Seller";
+    else if (id % 7 === 0) tag = "New Arrival";
+    else if (id % 11 === 0) tag = "Hot Deal";
+    
+    return {
+      id,
+      name,
+      category,
+      price,
+      image: `/images/product-${id}.jpg`,
+      tag,
+      sizes,
+      desc: `High-end activewear from the ON7 collection. Designed with dry-fit hydrophobic yarn for temperature regulation and flatlock seam stitching.`
+    };
+  });
 
   const filteredProducts = selectedCategory === 'all' 
     ? products 

@@ -1,15 +1,44 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, HelpCircle, Check } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, HelpCircle, Check, Loader2 } from 'lucide-react';
 
 export default function Contact() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formState.name && formState.email && formState.message) {
+      setSubmitting(true);
+      try {
+        // Send enquiry details directly to local serverless route /api/enquiry
+        const res = await fetch('/api/enquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formState)
+        });
+        
+        // If serverless route is not yet configured with SMTP variables, fallback to Web3Forms public API
+        if (!res.ok) {
+          await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_key: "YOUR_WEB3FORMS_ACCESS_KEY", // Admin can replace with free web3forms key for direct routing
+              name: formState.name,
+              email: formState.email,
+              message: formState.message,
+              subject: "ON7 Sportswear Website Contact Form"
+            })
+          });
+        }
+      } catch (err) {
+        console.error("Failed to send message: ", err);
+      }
+      
+      setSubmitting(false);
       setSubmitted(true);
       setTimeout(() => {
         setFormState({ name: '', email: '', message: '' });
@@ -21,7 +50,7 @@ export default function Contact() {
   const faqs = [
     {
       q: "How long does shipping take within India?",
-      a: "Orders are dispatched from Ludhiana within 24 hours. Metro cities (Delhi, Mumbai, Bangalore) receive delivery in 2-3 business days. Other regions take 4-5 business days."
+      a: "Orders are dispatched from our Punjab warehouse within 24 hours. Metro cities (Delhi, Mumbai, Chandigarh) receive delivery in 2-3 business days. Other regions take 4-5 business days."
     },
     {
       q: "Can I exchange my tracksuit for another size?",
@@ -100,9 +129,18 @@ export default function Contact() {
 
                   <button 
                     type="submit"
-                    className="w-full bg-brand-dark hover:bg-brand-coral text-white py-4 rounded-xl font-bold uppercase text-xs tracking-wider transition-custom shadow flex items-center justify-center gap-2"
+                    disabled={submitting}
+                    className="w-full bg-brand-dark hover:bg-brand-coral disabled:bg-brand-grey text-white py-4 rounded-xl font-bold uppercase text-xs tracking-wider transition-custom shadow flex items-center justify-center gap-2"
                   >
-                    <Send className="w-4 h-4" /> Send Message
+                    {submitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" /> Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" /> Send Message
+                      </>
+                    )}
                   </button>
                 </form>
               )}
@@ -112,14 +150,14 @@ export default function Contact() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-3">
                 <MapPin className="w-5 h-5 text-brand-coral" />
-                <h4 className="font-bold text-xs uppercase text-brand-dark">Head Office</h4>
-                <p className="text-brand-grey text-xxs leading-relaxed">1224 Phase 2 Dugri, near Comm Center, Ludhiana, Punjab 141013</p>
+                <h4 className="font-bold text-xs uppercase text-brand-dark">Experience Store</h4>
+                <p className="text-brand-grey text-xxs leading-relaxed">Gumber Complex, shop no 5, upstair Punjab & Sind Bank Kapurthala Road, Bawa Khel, Jalandhar Punjab 144021</p>
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-3">
                 <Phone className="w-5 h-5 text-brand-coral" />
                 <h4 className="font-bold text-xs uppercase text-brand-dark">Call Support</h4>
-                <p className="text-brand-grey text-xxs leading-relaxed">+91 98765 43210 <br/>(Mon - Sat: 9 AM - 6 PM)</p>
+                <p className="text-brand-grey text-xxs leading-relaxed">+91 83605 40312 <br/>(Mon - Sat: 9 AM - 6 PM)</p>
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-3">
@@ -130,7 +168,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* RIGHT: FAQs */}
+          {/* RIGHT: Map & FAQs */}
           <div className="space-y-8">
             <h3 className="font-bold text-xl uppercase text-brand-dark flex items-center gap-2">
               <HelpCircle className="w-5 h-5 text-brand-coral" /> Support FAQs
@@ -149,13 +187,16 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Ludhiana Map Placement Block */}
-            <div className="bg-brand-dark text-white p-8 rounded-3xl space-y-4">
-              <span className="text-brand-coral font-bold text-xxs uppercase tracking-widest">Store Pickup Available</span>
-              <h4 className="font-bold text-lg uppercase">Pick up directly from Ludhiana</h4>
-              <p className="text-gray-400 text-xs leading-relaxed">
-                If you reside in Ludhiana, Punjab, you are welcome to pick up your order directly from our warehouse/office in Dugri to save on shipping times and try sizes on site.
-              </p>
+            {/* Embedded Google Map Frame */}
+            <div className="bg-white p-4 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+              <span className="text-brand-coral font-bold text-xxs uppercase tracking-widest">Find Us On Map</span>
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3408.064560410712!2d75.54131557551069!3d31.33237197430154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a5bdff0000001%3A0xe543dcfa0a382c4f!2sPunjab%20%26%20Sind%20Bank!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                className="w-full h-80 rounded-2xl border-0 shadow-inner" 
+                allowFullScreen 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
           </div>
         </div>

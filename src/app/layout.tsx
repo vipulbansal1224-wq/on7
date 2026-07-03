@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag, Menu, X, Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Menu, X, Phone, Mail, MapPin, ArrowRight, Facebook, Instagram } from 'lucide-react';
 import './globals.css';
 
 // Stylized ON7 SVG Logo Component
@@ -182,16 +182,21 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
               {/* Brand Col */}
-              <div className="space-y-6">
+            <div className="space-y-6">
                 <Logo light />
                 <p className="text-gray-400 text-sm leading-relaxed">
                   ON7® is premium performance activewear designed for extreme comfort, sweat-wicking agility, and athletic precision. Engineered for those who move.
                 </p>
-                <div className="flex gap-4">
-                  {/* Social Handles */}
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">Follow Us: @ON7Active</span>
+                <div className="flex gap-4 items-center">
+                  <a href="https://facebook.com/on7active" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-coral transition-colors">
+                    <Facebook className="w-5 h-5" />
+                  </a>
+                  <a href="https://instagram.com/on7active" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-coral transition-colors">
+                    <Instagram className="w-5 h-5" />
+                  </a>
+                  <span className="text-xs text-gray-500 uppercase tracking-wider ml-2">@ON7Active</span>
                 </div>
-              </div>
+            </div>
 
               {/* Links Col */}
               <div>
@@ -240,11 +245,11 @@ export default function RootLayout({
                 <ul className="space-y-4 text-gray-400 text-sm">
                   <li className="flex gap-3">
                     <MapPin className="w-5 h-5 text-brand-coral flex-shrink-0" />
-                    <span>1224, Phase 2, Dugri, Near Comm Center, Ludhiana, Punjab 141013, India</span>
+                    <span>Gumber Complex, shop no 5, upstair Punjab & Sind Bank Kapurthala Road, Bawa Khel, Jalandhar Punjab 144021</span>
                   </li>
                   <li className="flex gap-3">
                     <Phone className="w-5 h-5 text-brand-coral flex-shrink-0" />
-                    <span>+91 98765 43210</span>
+                    <span>+91 83605 40312</span>
                   </li>
                   <li className="flex gap-3">
                     <Mail className="w-5 h-5 text-brand-coral flex-shrink-0" />
@@ -257,7 +262,7 @@ export default function RootLayout({
             {/* Bottom Bar */}
             <div className="border-t border-white/5 pt-8 mt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
               <p className="text-xs text-gray-500">
-                © {new Date().getFullYear()} ON7 Activewear. All rights reserved. Created in Ludhiana, Punjab.
+                © {new Date().getFullYear()} ON7 Activewear. All rights reserved. Created in Jalandhar, Punjab.
               </p>
               <div className="flex gap-6 text-xs text-gray-500">
                 <a href="#" className="hover:text-white">Privacy Policy</a>

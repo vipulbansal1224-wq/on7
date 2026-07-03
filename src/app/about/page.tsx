@@ -37,11 +37,14 @@ export default function About() {
             <div>
               <span className="text-brand-coral font-bold text-xs uppercase tracking-widest block mb-2">Designed in Punjab</span>
               <h2 className="text-3xl md:text-5xl font-black text-brand-dark uppercase tracking-tight">
-                Ludhiana's Premium Textile Innovation
+                Jalandhar & Ludhiana's Premium Textile Innovation
               </h2>
             </div>
             <p className="text-brand-grey text-sm leading-relaxed">
               Ludhiana is globally recognized as the textile powerhouse of India. It is here that **Vipul Bansal** conceptualized **ON7®** with a singular focus: to engineer athletic tracksuits, shorts, and joggers that equal international luxury sportswear standards at an honest price.
+            </p>
+            <p className="text-brand-grey text-sm leading-relaxed">
+              To bring this activewear catalog to our customers directly, we have opened our premium flagship experience center at **Gumber Complex, shop no 5, upstair Punjab & Sind Bank Kapurthala Road, Bawa Khel, Jalandhar**. This experience center acts as our primary customer support desk, retail showroom, and fast-track shipping terminal.
             </p>
             <p className="text-brand-grey text-sm leading-relaxed">
               We spent months working alongside local spinning mills and stitching workshops in Punjab to perfect our dry-fit polyester weave. We didn't want cheap, stiff athletic wear; we wanted fabrics that feel like a second skin, move like water, and breathe during high-intensity training.
