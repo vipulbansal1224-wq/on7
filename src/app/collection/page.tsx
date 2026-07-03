@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Filter, ShoppingBag, Eye, SlidersHorizontal, Check } from 'lucide-react';
 
 interface Product {
@@ -17,70 +17,80 @@ interface Product {
 export default function Collection() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [cartFeedback, setCartFeedback] = useState<number | null>(null);
+  const [productsList, setProductsList] = useState<Product[]>([]);
 
-  const products: Product[] = Array.from({ length: 61 }, (_, idx) => {
-    const id = idx + 1;
-    const categories: ('tracksuits' | 'shorts' | 'pants')[] = ['tracksuits', 'shorts', 'pants'];
-    const category = categories[idx % 3];
-    
-    const tracksuitNames = [
-      "ON7® Pro-Agility Active Tracksuit",
-      "ON7® Dry-Fit Elite Gym Tracksuit",
-      "ON7® Thermal Fleece Comfort Tracksuit",
-      "ON7® Engineered Side-Stripe Tracksuit",
-      "ON7® Vector Graphic Mockneck Tracksuit"
-    ];
-    
-    const shortsNames = [
-      "ON7® High-Performance Training Shorts",
-      "ON7® Signature Circular Logo Gym Shorts",
-      "ON7® Moisture-Control Running Shorts",
-      "ON7® Flex-Comfort Agility Shorts",
-      "ON7® Dual-Panel Athletic Mesh Shorts"
-    ];
-    
-    const joggerNames = [
-      "ON7® Tapered Fit Gym Jogger Pants",
-      "ON7® 4-Way Stretch Athletic Sweatpants",
-      "ON7® Agility Zippered Pocket Joggers",
-      "ON7® Dynamic Panel Warm-up Joggers",
-      "ON7® Ultra-Lightweight Track Joggers"
-    ];
-    
-    let name = "";
-    if (category === 'tracksuits') {
-      name = tracksuitNames[idx % tracksuitNames.length];
-    } else if (category === 'shorts') {
-      name = shortsNames[idx % shortsNames.length];
+  useEffect(() => {
+    const stored = localStorage.getItem('on7_products');
+    if (stored) {
+      setProductsList(JSON.parse(stored));
     } else {
-      name = joggerNames[idx % joggerNames.length];
-    }
+      const defaults: Product[] = Array.from({ length: 61 }, (_, idx) => {
+        const id = idx + 1;
+        const categories: ('tracksuits' | 'shorts' | 'pants')[] = ['tracksuits', 'shorts', 'pants'];
+        const category = categories[idx % 3];
+        
+        const tracksuitNames = [
+          "ON7® Pro-Agility Active Tracksuit",
+          "ON7® Dry-Fit Elite Gym Tracksuit",
+          "ON7® Thermal Fleece Comfort Tracksuit",
+          "ON7® Engineered Side-Stripe Tracksuit",
+          "ON7® Vector Graphic Mockneck Tracksuit"
+        ];
+        
+        const shortsNames = [
+          "ON7® High-Performance Training Shorts",
+          "ON7® Signature Circular Logo Gym Shorts",
+          "ON7® Moisture-Control Running Shorts",
+          "ON7® Flex-Comfort Agility Shorts",
+          "ON7® Dual-Panel Athletic Mesh Shorts"
+        ];
+        
+        const joggerNames = [
+          "ON7® Tapered Fit Gym Jogger Pants",
+          "ON7® 4-Way Stretch Athletic Sweatpants",
+          "ON7® Agility Zippered Pocket Joggers",
+          "ON7® Dynamic Panel Warm-up Joggers",
+          "ON7® Ultra-Lightweight Track Joggers"
+        ];
+        
+        let name = "";
+        if (category === 'tracksuits') {
+          name = tracksuitNames[idx % tracksuitNames.length];
+        } else if (category === 'shorts') {
+          name = shortsNames[idx % shortsNames.length];
+        } else {
+          name = joggerNames[idx % joggerNames.length];
+        }
 
-    const prices = ["₹2,499", "₹899", "₹1,499", "₹2,299", "₹949", "₹1,299"];
-    const price = prices[idx % prices.length];
-    
-    const sizes = id % 2 === 0 ? ["S", "M", "L", "XL", "XXL"] : ["M", "L", "XL"];
-    
-    let tag = undefined;
-    if (id % 5 === 0) tag = "Best Seller";
-    else if (id % 7 === 0) tag = "New Arrival";
-    else if (id % 11 === 0) tag = "Hot Deal";
-    
-    return {
-      id,
-      name,
-      category,
-      price,
-      image: `/images/product-${id}.jpg`,
-      tag,
-      sizes,
-      desc: `High-end activewear from the ON7 collection. Designed with dry-fit hydrophobic yarn for temperature regulation and flatlock seam stitching.`
-    };
-  });
+        const prices = ["₹2,499", "₹899", "₹1,499", "₹2,299", "₹949", "₹1,299"];
+        const price = prices[idx % prices.length];
+        
+        const sizes = id % 2 === 0 ? ["S", "M", "L", "XL", "XXL"] : ["M", "L", "XL"];
+        
+        let tag = undefined;
+        if (id % 5 === 0) tag = "Best Seller";
+        else if (id % 7 === 0) tag = "New Arrival";
+        else if (id % 11 === 0) tag = "Hot Deal";
+        
+        return {
+          id,
+          name,
+          category,
+          price,
+          image: `/images/product-${id}.jpg`,
+          tag,
+          sizes,
+          desc: `High-end activewear from the ON7 collection. Designed with dry-fit hydrophobic yarn for temperature regulation and flatlock seam stitching.`
+        };
+      });
+      localStorage.setItem('on7_products', JSON.stringify(defaults));
+      setProductsList(defaults);
+    }
+  }, []);
 
   const filteredProducts = selectedCategory === 'all' 
-    ? products 
-    : products.filter(p => p.category === selectedCategory);
+    ? productsList 
+    : productsList.filter(p => p.category === selectedCategory);
 
   const handleAddToCart = (id: number) => {
     setCartFeedback(id);

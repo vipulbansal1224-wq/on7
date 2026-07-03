@@ -6,16 +6,61 @@ import { usePathname } from 'next/navigation';
 import { ShoppingBag, Menu, X, Phone, Mail, MapPin, ArrowRight, Facebook, Instagram } from 'lucide-react';
 import './globals.css';
 
-// ON7 Logo Component using actual logo images (logo-1.jpeg and logo-2.jpeg)
-const Logo = ({ light = false }: { light?: boolean }) => (
-  <div className="flex items-center select-none">
-    <img 
-      src={light ? '/images/logo-dark.jpg' : '/images/logo-light.jpg'} 
-      alt="ON7 Logo" 
-      className="w-auto h-12 object-contain rounded"
-    />
-  </div>
-);
+// ON7 Logo Component using actual logo images (logo-1.jpeg and logo-2.jpeg) with 3D flip
+const Logo = ({ light = false }: { light?: boolean }) => {
+  const [flipped, setFlipped] = useState(false);
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setFlipped(!flipped);
+  };
+
+  return (
+    <div 
+      onClick={handleLogoClick}
+      className="flex items-center select-none cursor-pointer transition-transform duration-500 hover:scale-105"
+      style={{ perspective: '1000px' }}
+    >
+      <div 
+        className="relative transition-transform duration-700"
+        style={{ 
+          transformStyle: 'preserve-3d', 
+          transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          width: '76px',
+          height: '76px'
+        }}
+      >
+        {/* Front Logo */}
+        <div 
+          className="absolute inset-0"
+          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+        >
+          <img 
+            src={light ? '/images/logo-dark.jpg' : '/images/logo-light.jpg'} 
+            alt="ON7 Logo" 
+            className="w-full h-full object-contain rounded"
+          />
+        </div>
+        
+        {/* Back Logo */}
+        <div 
+          className="absolute inset-0"
+          style={{ 
+            backfaceVisibility: 'hidden', 
+            WebkitBackfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)' 
+          }}
+        >
+          <img 
+            src={light ? '/images/logo-light.jpg' : '/images/logo-dark.jpg'} 
+            alt="ON7 Logo Flipped" 
+            className="w-full h-full object-contain rounded"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function RootLayout({
   children,
@@ -241,7 +286,7 @@ export default function RootLayout({
                   </li>
                   <li className="flex gap-3">
                     <Phone className="w-5 h-5 text-brand-coral flex-shrink-0" />
-                    <span>+91 83605 40312</span>
+                    <span>+91 83605 40321</span>
                   </li>
                   <li className="flex gap-3">
                     <Mail className="w-5 h-5 text-brand-coral flex-shrink-0" />

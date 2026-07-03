@@ -157,7 +157,7 @@ export default function Contact() {
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-3">
                 <Phone className="w-5 h-5 text-brand-coral" />
                 <h4 className="font-bold text-xs uppercase text-brand-dark">Call Support</h4>
-                <p className="text-brand-grey text-xxs leading-relaxed">+91 83605 40312 <br/>(Mon - Sat: 9 AM - 6 PM)</p>
+                <p className="text-brand-grey text-xxs leading-relaxed">+91 83605 40321 <br/>(Mon - Sat: 9 AM - 6 PM)</p>
               </div>
 
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-3">
