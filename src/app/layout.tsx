@@ -89,6 +89,8 @@ export default function RootLayout({
     { name: 'Dry-Fit Tech', href: '/technology' },
     { name: 'Our Story', href: '/about' },
     { name: 'Contact', href: '/contact' },
+    { name: 'Privacy', href: '/privacy-policy' },
+    { name: 'Terms', href: '/terms-of-sale' },
   ];
 
   return (
@@ -297,14 +299,15 @@ export default function RootLayout({
             </div>
 
             {/* Bottom Bar */}
-            <div className="border-t border-white/5 pt-8 mt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-              <p className="text-xs text-gray-500">
-                © {new Date().getFullYear()} ON7 Activewear. All rights reserved. Created in Jalandhar, Punjab.
+            <div className="border-t border-white/5 pt-8 mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+              <p className="text-xs text-gray-400 leading-relaxed">
+                © {new Date().getFullYear()} ON7 Activewear. All rights reserved. <br className="sm:hidden" />
+                <span className="text-white font-semibold">Site created by IIBS (Innovative Ideas & Business Solutions) - 9988776628</span>
               </p>
-              <div className="flex gap-6 text-xs text-gray-500">
-                <a href="#" className="hover:text-white">Privacy Policy</a>
-                <a href="#" className="hover:text-white">Terms of Sale</a>
-                <a href="#" className="hover:text-white">Secure Checkout</a>
+              <div className="flex gap-6 text-xs text-gray-500 font-medium">
+                <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                <Link href="/terms-of-sale" className="hover:text-white transition-colors">Terms of Sale</Link>
+                <Link href="/secure-checkout" className="hover:text-white transition-colors">Secure Checkout</Link>
               </div>
             </div>
           </div>
