@@ -6,22 +6,14 @@ import { usePathname } from 'next/navigation';
 import { ShoppingBag, Menu, X, Phone, Mail, MapPin, ArrowRight, Facebook, Instagram } from 'lucide-react';
 import './globals.css';
 
-// Stylized ON7 SVG Logo Component
+// ON7 Logo Component using actual logo images (logo-1.jpeg and logo-2.jpeg)
 const Logo = ({ light = false }: { light?: boolean }) => (
-  <div className="flex items-center gap-2 select-none">
-    <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 ${
-      light ? 'border-white text-white' : 'border-brand-coral text-brand-coral'
-    }`}>
-      <svg className="w-5 h-5" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="42" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeDasharray="210 50" />
-        <path d="M38 62 L62 38 M62 38 H46 M62 38 V54" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </div>
-    <span className={`font-display font-black text-2xl tracking-tighter ${
-      light ? 'text-white' : 'text-brand-dark'
-    }`}>
-      ON<span className={light ? 'text-white' : 'text-brand-coral'}>7</span>
-    </span>
+  <div className="flex items-center select-none">
+    <img 
+      src={light ? '/images/logo-dark.jpg' : '/images/logo-light.jpg'} 
+      alt="ON7 Logo" 
+      className="w-auto h-12 object-contain rounded"
+    />
   </div>
 );
 
@@ -71,7 +63,7 @@ export default function RootLayout({
             <div className="flex items-center justify-between">
               {/* Logo */}
               <Link href="/">
-                <Logo light={scrolled ? true : false || pathname === '/technology' || pathname === '/about'} />
+                <Logo light={scrolled || pathname === '/' || pathname === '/technology' || pathname === '/about'} />
               </Link>
 
               {/* Desktop Nav Links */}
