@@ -71,6 +71,7 @@ export default function Contact() {
           <span className="text-brand-coral font-bold text-xs uppercase tracking-widest block mb-2">Get In Touch</span>
           <h1 className="text-4xl md:text-5xl font-black text-brand-dark uppercase tracking-tight">Contact ON7 Team</h1>
           <p className="text-brand-grey text-sm font-medium mt-2">Have a question about sizes, shipping, or bulk orders? Drop us a line.</p>
+          <p className="text-brand-dark font-bold text-sm mt-4 uppercase tracking-widest">Founder: Jasspaul Bawa</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -86,7 +87,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-bold uppercase text-sm">Message Sent Successfully!</h4>
-                    <p className="text-xs text-green-600">Vipul Bansal and the ON7 support team will contact you shortly.</p>
+                    <p className="text-xs text-green-600">Jasspaul Bawa and the ON7 support team will contact you shortly.</p>
                   </div>
                 </div>
               ) : (

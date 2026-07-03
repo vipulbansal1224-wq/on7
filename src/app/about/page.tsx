@@ -37,11 +37,11 @@ export default function About() {
             <div>
               <span className="text-brand-coral font-bold text-xs uppercase tracking-widest block mb-2">Designed in Punjab</span>
               <h2 className="text-3xl md:text-5xl font-black text-brand-dark uppercase tracking-tight">
-                Jalandhar & Ludhiana's Premium Textile Innovation
+                Jalandhar's Premium Textile Innovation
               </h2>
             </div>
             <p className="text-brand-grey text-sm leading-relaxed">
-              Ludhiana is globally recognized as the textile powerhouse of India. It is here that **Vipul Bansal** conceptualized **ON7®** with a singular focus: to engineer athletic tracksuits, shorts, and joggers that equal international luxury sportswear standards at an honest price.
+              Jalandhar has emerged as a premium hub for athletic wear. It is here that **Jasspaul Bawa** conceptualized **ON7®** with a singular focus: to engineer athletic tracksuits, shorts, and joggers that equal international luxury sportswear standards at an honest price.
             </p>
             <p className="text-brand-grey text-sm leading-relaxed">
               To bring this activewear catalog to our customers directly, we have opened our premium flagship experience center at **Gumber Complex, shop no 5, upstair Punjab & Sind Bank Kapurthala Road, Bawa Khel, Jalandhar**. This experience center acts as our primary customer support desk, retail showroom, and fast-track shipping terminal.
@@ -83,7 +83,7 @@ export default function About() {
                 <Building2 className="w-6 h-6" />
               </div>
               <h4 className="font-bold text-brand-dark uppercase text-md">Local Manufacturing</h4>
-              <p className="text-brand-grey text-xs">Made proudly in Ludhiana, Punjab, supporting regional craftsmanship and workshops.</p>
+              <p className="text-brand-grey text-xs">Made proudly in Jalandhar, Punjab, supporting regional craftsmanship and workshops.</p>
             </div>
 
             <div className="text-center space-y-3">

@@ -265,7 +265,7 @@ export default function RootLayout({
                   </li>
                   <li>
                     <Link href="/about" className="text-gray-400 hover:text-brand-coral text-sm transition-colors">
-                      Vipul Bansal Vision
+                      Jasspaul Bawa Vision
                     </Link>
                   </li>
                   <li>
