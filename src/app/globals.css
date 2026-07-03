@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-brand-light text-brand-dark font-sans antialiased overflow-x-hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-tight;
+  }
+}
+
+/* Custom styles for luxury glassmorphism and animations */
+.glass-nav {
+  background: rgba(10, 15, 29, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dark-glass-card {
+  background: rgba(19, 28, 53, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Micro-animations and transitions */
+.transition-custom {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scale-hover:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* Gradient text */
+.text-gradient-coral {
+  background: linear-gradient(135deg, #ff5a3c 0%, #ff8c75 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient-coral {
+  background: linear-gradient(135deg, #ff5a3c 0%, #ff765b 100%);
+}
+
+.bg-gradient-navy {
+  background: linear-gradient(135deg, #0a0f1d 0%, #131c35 100%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0f1d;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff5a3c;
+  border-radius: 3px;
+}
